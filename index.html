@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Refugio Natural — Mindfulness en Realidad Virtual</title>
+<meta name="description" content="Simulación 3D de un escenario natural (bosque y lago al atardecer) para practicar mindfulness y respiración consciente, con soporte para realidad virtual (WebXR).">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="scene-canvas"></canvas>
+
+<!-- Pantalla de carga -->
+<div id="loading-screen" class="overlay">
+  <div class="loading-content">
+    <div class="leaf-spinner" aria-hidden="true">🌿</div>
+    <p>Preparando tu refugio natural…</p>
+  </div>
+</div>
+
+<!-- Menú principal -->
+<div id="menu-screen" class="overlay hidden">
+  <div class="panel menu-panel">
+    <h1>Refugio Natural</h1>
+    <p class="subtitle">Un espacio de bosque y lago al atardecer para practicar mindfulness, respirar con calma y observar sin juzgar. Disponible en pantalla, móvil y realidad virtual.</p>
+
+    <div class="field-group">
+      <label for="pattern-select">Patrón de respiración</label>
+      <select id="pattern-select">
+        <option value="box">Respiración en caja · 4-4-4-4</option>
+        <option value="478">4-7-8 · calma profunda</option>
+        <option value="coherent" selected>Respiración coherente · 5-5</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label for="duration-select">Duración de la práctica</label>
+      <select id="duration-select">
+        <option value="180">3 minutos</option>
+        <option value="300" selected>5 minutos</option>
+        <option value="600">10 minutos</option>
+        <option value="900">15 minutos</option>
+        <option value="0">Libre (sin límite)</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label for="volume-range">Volumen del ambiente</label>
+      <input type="range" id="volume-range" min="0" max="100" value="65">
+    </div>
+
+    <button id="start-btn" class="btn btn-primary">Comenzar experiencia</button>
+    <p class="hint" id="vr-hint">Detectando compatibilidad con realidad virtual…</p>
+  </div>
+</div>
+
+<!-- HUD durante la sesión (no visible dentro del visor VR) -->
+<div id="session-hud" class="hud hidden">
+  <div class="breath-card">
+    <div class="breath-ring" id="breath-ring">
+      <span id="breath-label">Inhala</span>
+    </div>
+    <div class="timer" id="session-timer">05:00</div>
+  </div>
+  <div class="hud-buttons">
+    <button id="pause-btn" class="btn btn-ghost" aria-label="Pausar">⏸</button>
+    <button id="exit-btn" class="btn btn-ghost" aria-label="Salir">✕</button>
+  </div>
+</div>
+
+<!-- Pantalla de cierre -->
+<div id="end-screen" class="overlay hidden">
+  <div class="panel menu-panel">
+    <h1>Sesión completada</h1>
+    <p class="subtitle" id="end-message">Tómate un momento antes de continuar con tu día. Nota cómo se siente tu cuerpo ahora mismo.</p>
+    <button id="restart-btn" class="btn btn-primary">Practicar de nuevo</button>
+    <button id="close-btn" class="btn btn-ghost">Cerrar</button>
+  </div>
+</div>
+
+<div id="vr-button-container"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/three/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
